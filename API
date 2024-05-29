@@ -1,0 +1,16 @@
+import requests
+
+API_KEY = 'YOUR_API_KEY'
+symbol = 'AAPL'
+
+url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={API_KEY}'
+
+response = requests.get(url)
+
+if response.status_code == 200:
+    data = response.json()
+    time_series = data['Time Series (Daily)']
+    for date, values in time_series.items():
+        print(f'Дата: {date}, Цена: {values["4. close"]}')
+else:
+    print('Ошибка при запросе к API:', response.status_code)
